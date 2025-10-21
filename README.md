@@ -1,71 +1,64 @@
 # Sorteio
+
 Um projeto em Laravel para sortear brindes durante o meetup do PHPRS.
 
-## Pré-requisitos
+## 📋 Pré-requisitos
+
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-## Instalação
 
-Primeiro precisamos instalar o docker, Se você não estiver usando o GNOME, deve instalar o gnome-terminal para habilitar o acesso ao terminal do Docker Desktop
+## 🚀 Instalação
 
-```
-sudo apt install gnome-terminal
-```
+1. Clone o repositório:
 
-Agora sim, baixe o Docker
-
-```
-sudo apt-get update
-sudo apt-get install ./docker-desktop-amd64.deb
+```bash
+git clone git@github.com:Sn9wz/sorteio.git
+cd sorteio
 ```
 
-Pronto agora vamos criar um contêiner com a imagem PHP e tentar instalar o Composer e o Bun manualmente.
+1. Copie o arquivo de ambiente:
 
-```
-docker run -it --rm php bash
-```
-
->Esse comando vai criar um contêiner com a imagem PHP e executar o comando bash dentro dele. O parâmetro --rm vai remover o contêiner assim que ele for encerrado.
-
-Beleza vamos tentar instalar o composer agora
-
-```
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
+```bash
+cp .env.example .env
 ```
 
-Antes de instalar o bun ele precisa do unzip, que não está instalado no contêiner. Vamos instalar.
+1. Inicie os containers:
 
-```
-apt-get update && apt-get install -y unzip
-```
-
-Ótimo vamos tentar instalar o Bun — um gerenciador de pacotes alternativo ao Node.js.
-
-```
-curl -fsSL https://bun.sh/install | bash
+```bash
+docker compose up -d --build --force-recreate
 ```
 
-Só mais um comando que o Bun pediu para rodar, e está instalado.
+1. Instalar dependências e configurar a aplicação:
 
+```bash
+docker compose exec app composer install --no-interaction --no-plugins --no-scripts
+docker compose exec app npm install && npm run build
+docker compose exec app artisan key:generate
+docker compose exec app touch /var/www/html/database/database.sqlite
+docker compose exec app php artisan migrate --force
 ```
-source /root/.bashrc
+
+O script de entrada (`docker-entrypoint.sh`) irá automaticamente:
+
+* Criar os diretórios necessários
+* Instalar dependências do Composer e NPM
+* Gerar a chave da aplicação
+* Executar as migrations (se houver banco de dados configurado)
+
+## 📂 Estrutura do Projeto
+
+```bash
+sorteio/
+├── docker-compose.yml       # Configuração dos serviços Docker
+├── Dockerfile               # Imagem PHP customizada
+├── docker-entrypoint.sh     # Script de inicialização
+├── docker/
+│   └── nginx/
+│       └── nginx.conf       # Configuração do Nginx
+└── php.ini                  # Configurações customizadas do PHP
 ```
 
->Na verdade, ele já estava instalado, mas para que funcionasse na sessão atual do shell, eu tive que rodar esse comando para recarregar o arquivo .bashrc.
-
-Vamos testar se tudo está funcionando até agora.
-
-```
-composer --version
-bun --version
-```
-## Estrutura do Docker
-
-O arquivo `docker-compose.yml` está localizado em: sorteio\docker-compose.yml
-
-## Comandos Docker
+## 🐳 Comandos Docker
 
 Para iniciar o servidor:
 
@@ -79,9 +72,15 @@ Para parar e remover os containers:
 docker compose down
 ```
 
+Entrar no container da aplicação:
+
+```bash
+docker compose exec app bash
+```
+
 ## Observações
 
-Certifique-se de estar no diretório correto (C:\Users\brayan medeiros\Documents\estudos\sorteio\) antes de executar os comandos.
+Certifique-se de estar no diretório correto do projeto antes de executar os comandos.
 
 Caso precise ver os logs dos containers, utilize:
 
@@ -92,5 +91,17 @@ docker compose logs -f
 Para reconstruir a imagem após alterações no Dockerfile, use:
 
 ```bash
-docker compose up -d --build
+docker compose up -d --build --force-recreate
 ```
+
+## 🌐 Acessando a Aplicação
+
+Após iniciar os containers, acesse:
+
+> Aplicação: http://localhost:8080
+
+## 📝 Notas Importantes
+
+- Certifique-se de que as portas 8080 e 9000 estejam disponíveis
+- Os volumes mapeiam o código local para /var/www/html no container
+- As permissões dos diretórios storage e bootstrap/cache são configuradas automaticamente
