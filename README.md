@@ -33,7 +33,7 @@ docker-compose up -d --build --force-recreate
 ```bash
 docker-compose exec app composer install --no-interaction --no-plugins --no-scripts
 docker-compose exec app npm install && npm run build
-docker-compose exec app artisan key:generate
+docker-compose exec app php artisan key:generate
 docker-compose exec app touch /var/www/html/database/database.sqlite
 docker-compose exec app php artisan migrate --force
 ```
