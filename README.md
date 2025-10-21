@@ -25,17 +25,17 @@ cp .env.example .env
 1. Inicie os containers:
 
 ```bash
-docker compose up -d --build --force-recreate
+docker-compose up -d --build --force-recreate
 ```
 
 1. Instalar dependências e configurar a aplicação:
 
 ```bash
-docker compose exec app composer install --no-interaction --no-plugins --no-scripts
-docker compose exec app npm install && npm run build
-docker compose exec app artisan key:generate
-docker compose exec app touch /var/www/html/database/database.sqlite
-docker compose exec app php artisan migrate --force
+docker-compose exec app composer install --no-interaction --no-plugins --no-scripts
+docker-compose exec app npm install && npm run build
+docker-compose exec app artisan key:generate
+docker-compose exec app touch /var/www/html/database/database.sqlite
+docker-compose exec app php artisan migrate --force
 ```
 
 O script de entrada (`docker-entrypoint.sh`) irá automaticamente:
@@ -63,19 +63,19 @@ sorteio/
 Para iniciar o servidor:
 
 ```bash
-docker compose up -d
+docker-compose up -d
 ```
 
 Para parar e remover os containers:
 
 ```bash
-docker compose down
+docker-compose down
 ```
 
 Entrar no container da aplicação:
 
 ```bash
-docker compose exec app bash
+docker-compose exec app bash
 ```
 
 ## Observações
@@ -85,13 +85,13 @@ Certifique-se de estar no diretório correto do projeto antes de executar os com
 Caso precise ver os logs dos containers, utilize:
 
 ```bash
-docker compose logs -f
+docker-compose logs -f
 ```
 
 Para reconstruir a imagem após alterações no Dockerfile, use:
 
 ```bash
-docker compose up -d --build --force-recreate
+docker-compose up -d --build --force-recreate
 ```
 
 ## 🌐 Acessando a Aplicação
