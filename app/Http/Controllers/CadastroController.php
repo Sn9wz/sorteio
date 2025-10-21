@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CadastroController extends Controller
 {
@@ -26,8 +27,11 @@ class CadastroController extends Controller
         ? json_decode(file_get_contents($path), true)
         : [];
 
+        $normalizedNome = Str::lower(Str::ascii($nome));
+
         foreach ($participants as $p) {
-            if (strtollower($p['nome']) === strtolower($nome)) {
+            $normalizedExisting = Str::lower(Str::ascii($p['nome']));
+            if ($normalizedExisting === $normalizedNome) {
                 return redirect('/cadastro')->with('error', 'Este nome já foi cadastrado.');
             }
         }
