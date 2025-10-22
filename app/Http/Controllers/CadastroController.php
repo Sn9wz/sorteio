@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class CadastroController extends Controller
@@ -47,7 +46,5 @@ class CadastroController extends Controller
         file_put_contents($path, json_encode($participants, JSON_PRETTY_PRINT));
 
         return redirect('/cadastro')->with('success', 'Participante cadastrado com sucesso!');
-
     }
-
 }
