@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Participantes</title>
+    @vite(['resources/css/style.css'])
 </head>
 <body>
-    <h1>Cadastro</h1>
+   <div class="container">
 
-    {{-- Mensagens de sucesso ou erro --}}
-    @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+     <h1>Cadastro dos Participantes</h1>
+     
+     @if (session('success'))
+        <p class="success" style="color: green;">{{ session('success') }}</p>
+     @endif
 
-    @if (session('error'))
-        <p style="color: red;">{{ session('error') }}</p>
-    @endif
-
-    <form action="/cadastro" method="POST">
+     @if (session('error'))
+        <p class="error" style="color: red;">{{ session('error') }}</p>
+     @endif
+    <div class="form-grup">
+     <form action="/cadastro" method="POST">
         @csrf
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required>
         <button type="submit">Cadastrar</button>
-    </form>
+     </form>
+    </div>
+   </div>
 </body>
 </html>

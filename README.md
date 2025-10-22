@@ -100,6 +100,12 @@ Após iniciar os containers, acesse:
 
 > Aplicação: http://localhost:8080
 
+Para ver a estilização por CSS é preciso usar
+
+```
+npm run dev
+```
+
 ## 📝 Notas Importantes
 
 - Certifique-se de que as portas 8080 e 9000 estejam disponíveis
