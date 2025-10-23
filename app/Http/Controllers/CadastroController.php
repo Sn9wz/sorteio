@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CadastroController extends Controller
 {
@@ -12,24 +13,26 @@ class CadastroController extends Controller
         return view('cadastro');
     }
 
-    public function store(request $request)
+    public function store(Request $request)
     {
         $nome = trim($request->input('nome'));
 
         if (empty($nome)) {
-            return redirect('/cadastro')->with('error', 'O nome não pode estar em branco.');
+         return redirect('/cadastro')->with('error', 'O nome não pode estar em branco.');
         }
 
-        $path = storage_path('app/participants.json');
+        $path = 'participants.json';
 
-        $participants = file_exists($path)
-        ? json_decode(file_get_contents($path), true)
-        : [];
+        if (Storage::disk('local')->exists($path)) {
+            $participants = json_decode(Storage::disk('local')->get($path), true);
+        } else {
+            $participants = [];
+        }
 
-        $normalizedNome = Str::lower(Str::ascii($nome));
+        $normalizedNome = \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($nome));
 
         foreach ($participants as $p) {
-            $normalizedExisting = Str::lower(Str::ascii($p['nome']));
+            $normalizedExisting = \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($p['nome']));
             if ($normalizedExisting === $normalizedNome) {
                 return redirect('/cadastro')->with('error', 'Este nome já foi cadastrado.');
             }
@@ -43,8 +46,9 @@ class CadastroController extends Controller
 
         $participants[] = $newParticipant;
 
-        file_put_contents($path, json_encode($participants, JSON_PRETTY_PRINT));
+        Storage::disk('local')->put($path, json_encode($participants, JSON_PRETTY_PRINT));
 
         return redirect('/cadastro')->with('success', 'Participante cadastrado com sucesso!');
-    }
+}
+
 }
