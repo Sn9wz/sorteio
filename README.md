@@ -32,7 +32,9 @@ docker-compose up -d --build --force-recreate
 
 ```bash
 docker-compose exec app composer install --no-interaction --no-plugins --no-scripts
-docker-compose exec app npm install && npm run build
+docker-compose exec app npm install 
+docker-compose exec app npm run build
+docker-compose exec app npm run dev
 docker-compose exec app php artisan key:generate
 docker-compose exec app touch /var/www/html/database/database.sqlite
 docker-compose exec app php artisan migrate --force
@@ -99,12 +101,6 @@ docker-compose up -d --build --force-recreate
 Após iniciar os containers, acesse:
 
 > Aplicação: http://localhost:8080
-
-Para ver a estilização por CSS é preciso usar
-
-```
-npm run dev
-```
 
 ## 📝 Notas Importantes
 
