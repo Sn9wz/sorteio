@@ -28,8 +28,8 @@ class CadastroController extends Controller
         } else {
             $participants = [];
         }
-
-        $normalizedNome = \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($nome));
+        
+        $normalizedNome = Str::lower(Str::ascii($nome));
 
         foreach ($participants as $p) {
             $normalizedExisting = \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($p['nome']));
