@@ -32,7 +32,7 @@ class CadastroController extends Controller
         $normalizedNome = Str::lower(Str::ascii($nome));
 
         foreach ($participants as $p) {
-            $normalizedExisting = \Illuminate\Support\Str::lower(\Illuminate\Support\Str::ascii($p['nome']));
+            $normalizedExisting = Str::lower(Str::ascii($p['nome']));
             if ($normalizedExisting === $normalizedNome) {
                 return redirect('/cadastro')->with('error', 'Este nome já foi cadastrado.');
             }
