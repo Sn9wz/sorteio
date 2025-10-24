@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-  background: white;
+  background: rgb(255, 240, 221);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -52,13 +52,13 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-  border-color: #0077b6;
-  box-shadow: 0 0 4px #0077b6;
+  border-color: #e0d100;
+  box-shadow: 0 0 4px #000000b4;
 }
 
 button {
-  background-color: #0077b6;
-  color: white;
+  background-color: #e7e300;
+  color: rgb(0, 0, 0);
   border: none;
   padding: 8px 14px;
   border-radius: 5px;
@@ -68,7 +68,7 @@ button {
 }
 
 button:hover {
-  background-color: #023e8a;
+  background-color: #dacb00;
   transform: scale(1.05);
 }
 
@@ -84,4 +84,35 @@ label {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.sorteio {
+  background: rgb(255, 240, 221);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  align-items: center;
+}
+
+.logo {
+  width: 395px;
+  height: auto;
+  margin: auto;
+  justify-content: 50px;
+  position: absolute;
+  top: 20px;
+  right: auto
+}
+
+#listaVencedores li {
+  font-size: 20px;
+  color: #000000;
+  list-style: none;
+}
+
+#listaVencedores {
+  padding: unset;
+  text-align: center;
+  font-weight: bold;
 }

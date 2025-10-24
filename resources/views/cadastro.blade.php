@@ -6,10 +6,13 @@
     @vite(['resources/css/style.css'])
 </head>
 <body>
+
+   <img src="{{ asset('images/PHPRS_logo.png') }}" alt="PHPRS_logo" class="logo">
+
    <div class="container">
 
      <h1>Cadastro dos Participantes</h1>
-     
+     <br>
      @if (session('success'))
         <p class="success" style="color: green;">{{ session('success') }}</p>
      @endif
