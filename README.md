@@ -34,10 +34,10 @@ docker-compose up -d --build --force-recreate
 docker-compose exec app composer install --no-interaction --no-plugins --no-scripts
 docker-compose exec app npm install 
 docker-compose exec app npm run build
-docker-compose exec app npm run dev
 docker-compose exec app php artisan key:generate
 docker-compose exec app touch /var/www/html/database/database.sqlite
 docker-compose exec app php artisan migrate --force
+docker-compose exec app npm run dev
 ```
 
 O script de entrada (`docker-entrypoint.sh`) irá automaticamente:

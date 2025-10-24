@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     container_name: laravel_app
     working_dir: /var/www/html
+    ports:
+      - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
     volumes:
       - ./:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
@@ -27,3 +29,4 @@ services:
 
 networks:
   laravel:
+    driver: bridge
